@@ -81,6 +81,7 @@ check:
   - 'shell:production-composer-install'
   # Build like we normally would
   - 'release'
+  - 'webpack:recalibration'
   # Remove build folder
   - 'clean:artifact'
   # Copy only the relevant files to the folder
