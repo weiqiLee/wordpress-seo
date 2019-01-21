@@ -120,14 +120,6 @@ module.exports = function( env = { environment: "production", recalibration: "di
 				},
 				plugins,
 			},
-			// Analysis that is used as external (`window.yoastseo`).
-			{
-				...base,
-				entry: {
-					analysis: "./js/src/analysis.js",
-				},
-				plugins,
-			},
 		];
 	} else {
 		config = [
