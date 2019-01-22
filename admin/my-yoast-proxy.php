@@ -7,7 +7,7 @@
  * @package WPSEO\Admin
  */
 
-switch ( filter_input( INPUT_GET, 'file', FILTER_SANITIZE_STRING ) ) {
+switch ( $_GET['file'] ) {
 	case 'research-webworker':
 		$my_yoast_url = 'https://my.yoast.com/api/downloads/file/analysis-worker';
 		$my_yoast_url_content_type = 'text/javascript; charset=UTF-8';
@@ -15,6 +15,7 @@ switch ( filter_input( INPUT_GET, 'file', FILTER_SANITIZE_STRING ) ) {
 }
 
 if ( empty( $my_yoast_url ) ) {
+	header('HTTP/1.0 501 Not implemented');
 	exit;
 }
 
