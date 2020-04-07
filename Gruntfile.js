@@ -32,7 +32,6 @@ module.exports = function( grunt ) {
 				return this.grunt + "config/";
 			},
 			css: "css/dist/",
-			sass: "css/src/",
 			grunt: "grunt/",
 			images: "images/",
 			js: "js/src/",
@@ -42,7 +41,6 @@ module.exports = function( grunt ) {
 			vendor: "vendor/",
 		},
 		files: {
-			sass: [ "<%= paths.sass %>*.scss" ],
 			css: [
 				"css/dist/*.css",
 			],
@@ -106,26 +104,6 @@ module.exports = function( grunt ) {
 				return project.paths.theme + "changelog.txt";
 			},
 			grunt: "Gruntfile.js",
-		},
-		sassFiles: {
-			"css/dist/post-overview-global-<%= pluginVersionSlug %>.css": [ "css/src/editor/post-overview-global.scss" ],
-			"css/dist/adminbar-<%= pluginVersionSlug %>.css": [ "css/src/admin/adminbar.scss" ],
-			"css/dist/alerts-<%= pluginVersionSlug %>.css": [ "css/src/alerts.scss" ],
-			"css/dist/dashboard-<%= pluginVersionSlug %>.css": [ "css/src/admin/dashboard.scss" ],
-			"css/dist/edit-page-<%= pluginVersionSlug %>.css": [ "css/src/editor/edit-page.scss" ],
-			"css/dist/featured-image-<%= pluginVersionSlug %>.css": [ " css/src/editor/featured-image.scss" ],
-			"css/dist/inside-editor-<%= pluginVersionSlug %>.css": [ "css/src/inside-editor.scss" ],
-			"css/dist/metabox-<%= pluginVersionSlug %>.css": [ "css/src/editor/metabox.scss" ],
-			"css/dist/metabox-primary-category-<%= pluginVersionSlug %>.css": [ "css/src/editor/metabox-primary-category.scss" ],
-			"css/dist/toggle-switch-<%= pluginVersionSlug %>.css": [ "css/src/toggle-switch.scss" ],
-			"css/dist/wpseo-dismissible-<%= pluginVersionSlug %>.css": [ "css/src/wpseo-dismissible.scss" ],
-			"css/dist/yst_plugin_tools-<%= pluginVersionSlug %>.css": [ "css/src/editor/yst_plugin_tools.scss" ],
-			"css/dist/yst_seo_score-<%= pluginVersionSlug %>.css": [ "css/src/yst_seo_score.scss" ],
-			"css/dist/yoast-components-<%= pluginVersionSlug %>.css": [ "css/src/admin/yoast-components.scss" ],
-			"css/dist/filter-explanation-<%= pluginVersionSlug %>.css": [ "css/src/filter-explanation.scss" ],
-			"css/dist/structured-data-blocks-<%= pluginVersionSlug %>.css": [ "css/src/editor/structured-data-blocks.scss" ],
-			"css/dist/admin-all-<%= pluginVersionSlug %>.css": [ "css/src/admin/all.scss" ],
-			"css/dist/configuration-wizard-<%= pluginVersionSlug %>.css": [ "css/src/components/configuration-wizard.scss" ],
 		},
 		pkg,
 	};
