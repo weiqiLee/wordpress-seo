@@ -5,7 +5,7 @@ import { __ } from "@wordpress/i18n";
 const BeaconOffset = createGlobalStyle`
 	@media only screen and (min-width: 1024px) {
 		.BeaconFabButtonFrame.BeaconFabButtonFrame {
-			${ ( props => props.isRtl === "1" ? "left" : "right" ) }: 340px !important;
+			right: 340px;
 		}
 	}
 `;
@@ -13,15 +13,15 @@ const BeaconOffset = createGlobalStyle`
 /**
  * Render a component in a newly created div.
  *
- * @param {React.Component} component The component to render.
+ * @param {React.Component} Component The component to render.
  *
  * @returns {void}
  */
-function renderComponent( component ) {
+function renderComponent( Component ) {
 	const element = document.createElement( "div" );
 	element.setAttribute( "id", "yoast-helpscout-beacon" );
 
-	render( component, element );
+	render( <Component />, element );
 
 	document.body.appendChild( element );
 }
@@ -83,13 +83,8 @@ function loadHelpScout( beaconId, sessionData = "" ) {
 		window.Beacon( "session-data", JSON.parse( sessionData ) );
 	}
 
-	if ( window.wpseoAdminGlobalL10n.isRtl === "1" ) {
-		// eslint-disable-next-line new-cap
-		window.Beacon( "config", { display: { position: "left" } } );
-	}
-
 	if ( pageHasUpsells() ) {
-		renderComponent( <BeaconOffset isRtl={ window.wpseoAdminGlobalL10n.isRtl } /> );
+		renderComponent( BeaconOffset );
 	}
 }
 
@@ -111,7 +106,7 @@ function loadHelpScoutConsent( beaconId, sessionData = null ) {
 		z-index: 1049;
 		bottom: 40px;
 		box-shadow: rgba(0, 0, 0, 0.1) 0 4px 7px;
-		${ ( props => props.isRtl === "1" ? "left" : "right" ) }: 40px;
+		right: 40px;
 		top: auto;
 		border-width: initial;
 		border-style: none;
@@ -227,8 +222,8 @@ function loadHelpScoutConsent( beaconId, sessionData = null ) {
 
 		return (
 			<Fragment>
-				{ hasUpsells && <BeaconOffset isRtl={ window.wpseoAdminGlobalL10n.isRtl } /> }
-				{ show && <Frame className={ hasUpsells ? "BeaconFabButtonFrame" : "" } isRtl={ window.wpseoAdminGlobalL10n.isRtl }>
+				{ hasUpsells && <BeaconOffset /> }
+				{ show && <Frame className={ hasUpsells ? "BeaconFabButtonFrame" : "" }>
 					<Button onClick={ onClick }>
 						<SpeechBubble />
 					</Button>
@@ -237,7 +232,7 @@ function loadHelpScoutConsent( beaconId, sessionData = null ) {
 		);
 	};
 
-	renderComponent( <HelpScoutBeaconAskConsentButton /> );
+	renderComponent( HelpScoutBeaconAskConsentButton );
 }
 
 window.wpseoHelpScoutBeacon = loadHelpScout;

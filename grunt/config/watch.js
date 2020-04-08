@@ -35,4 +35,10 @@ module.exports = {
 			"eslint:plugin",
 		],
 	},
+	sass: {
+		files: "<%= paths.sass %>**/*.scss",
+		tasks: [
+			"build:css",
+		],
+	},
 };

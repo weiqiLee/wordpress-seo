@@ -2,7 +2,7 @@
 /**
  * WPSEO Free plugin test file.
  *
- * @package WPSEO\Tests
+ * @package WPSEO\Tests\Free
  */
 
 use Brain\Monkey\Functions;

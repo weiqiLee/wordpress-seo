@@ -12,11 +12,11 @@
   - 'copy:js-dependencies'
   - 'webpack:buildDev'
 
-# Build CSS for development
+# Build CSS from SCSS to production
 'build:css':
   - 'clean:build-assets-css'
   - 'copy:css-dependencies'
-  - 'copy:css-files'
+  - 'sass:build'
   - 'postcss:build'
   - 'rtlcss:build'
 
@@ -142,19 +142,11 @@ release:
   - 'clean:build-assets'
   - 'build:images'
   - 'release:js'
-  - 'release:css'
+  - 'build:css'
   - 'build:i18n'
 'release:js':
   - 'copy:js-dependencies'
   - 'webpack:buildProd'
-
-# Build CSS for production
-'release:css':
-  - 'clean:build-assets-css'
-  - 'copy:css-dependencies'
-  - 'copy:css-files'
-  - 'postcss:release'
-  - 'rtlcss:build'
 
 'deploy:master':
   - 'update-version'

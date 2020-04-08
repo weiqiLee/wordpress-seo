@@ -12,8 +12,6 @@ final class WPSEO_Image_Utils_Test extends WPSEO_UnitTestCase {
 
 	/**
 	 * Tests getting the full image for an existing attachment.
-	 *
-	 * @covers \WPSEO_Image_Utils::get_image
 	 */
 	public function test_get_full_image() {
 		$attachment = self::factory()->attachment->create();
@@ -44,8 +42,6 @@ final class WPSEO_Image_Utils_Test extends WPSEO_UnitTestCase {
 
 	/**
 	 * Tests getting a medium image.
-	 *
-	 * @covers \WPSEO_Image_Utils::get_image
 	 */
 	public function test_get_medium_image() {
 		$attachment = self::factory()->attachment->create();
@@ -63,8 +59,6 @@ final class WPSEO_Image_Utils_Test extends WPSEO_UnitTestCase {
 
 	/**
 	 * Returns getting the image for an existing attachment.
-	 *
-	 * @covers \WPSEO_Image_Utils::get_image
 	 */
 	public function test_get_image_for_unexisting_attachment() {
 		$this->assertFalse( WPSEO_Image_Utils::get_image( 0, 'full' ) );
@@ -75,12 +69,12 @@ final class WPSEO_Image_Utils_Test extends WPSEO_UnitTestCase {
 	 *
 	 * @dataProvider get_data_provider
 	 *
-	 * @covers \WPSEO_Image_Utils::get_data
-	 *
 	 * @param mixed   $image         The image data.
 	 * @param mixed   $expected      Expected value.
 	 * @param integer $attachment_id The attachment id.
 	 * @param string  $message       Message to show when test fails.
+	 *
+	 * @covers WPSEO_Image_Utils::get_data
 	 */
 	public function test_get_data( $image, $expected, $attachment_id, $message ) {
 		$this->assertEquals(
@@ -94,8 +88,6 @@ final class WPSEO_Image_Utils_Test extends WPSEO_UnitTestCase {
 	 * Tests the usable dimensions method.
 	 *
 	 * @dataProvider data_get_usable_dimensions
-	 *
-	 * @covers \WPSEO_Image_Utils::filter_usable_dimensions
 	 *
 	 * @param int     $width       Width of the image.
 	 * @param int     $height      Height of the image.
@@ -156,13 +148,11 @@ final class WPSEO_Image_Utils_Test extends WPSEO_UnitTestCase {
 	/**
 	 * Tests if the absolute path is working as expected.
 	 *
-	 * @dataProvider data_get_absolute_path
-	 *
-	 * @covers \WPSEO_Image_Utils::get_absolute_path
-	 *
 	 * @param string $input    Data to use in execution.
 	 * @param string $expected Expected result.
 	 * @param string $message  Description of the tested data.
+	 *
+	 * @dataProvider data_get_absolute_path
 	 */
 	public function test_absolute_path( $input, $expected, $message = '' ) {
 		$result = WPSEO_Image_Utils::get_absolute_path( $input );

@@ -164,8 +164,7 @@ class Data {
 		}
 
 		// When no custom slug is provided we should use the generated_slug attribute.
-		const slug = this.getPostAttribute( "slug" ) || generatedSlug;
-		return decodeURIComponent( slug );
+		return this.getPostAttribute( "slug" ) || generatedSlug;
 	}
 
 	/**

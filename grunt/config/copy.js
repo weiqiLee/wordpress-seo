@@ -20,19 +20,6 @@ module.exports = {
 			},
 		],
 	},
-	"css-files": {
-		files: [
-			{
-				expand: true,
-				cwd: "css/src",
-				src: [ "**.css" ],
-				dest: "css/dist/",
-				rename: ( dest, src ) => {
-					return dest + src.replace( ".css", "-<%= pluginVersionSlug %>.css" );
-				},
-			},
-		],
-	},
 	"json-translations": {
 		files: [
 			{
