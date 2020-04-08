@@ -1,9 +1,5 @@
 <?php
 
-namespace Yoast\WP\SEO\Tests\Generators\Schema;
-
-use Brain\Monkey\Filters;
-use Mockery;
 use Yoast\WP\SEO\Helpers\Image_Helper;
 use Yoast\WP\SEO\Helpers\Schema\Article_Helper;
 use Yoast\WP\SEO\Helpers\Schema;
@@ -150,7 +146,7 @@ class Author_Test extends TestCase {
 
 		$this->meta_tags_context->canonical = 'http://basic.wordpress.test/author/admin/';
 
-		Filters\expectApplied( 'wpseo_schema_person_user_id' );
+		Brain\Monkey\Filters\expectApplied( 'wpseo_schema_person_user_id' );
 
 		$actual = $this->instance->generate();
 
@@ -184,7 +180,7 @@ class Author_Test extends TestCase {
 
 		$this->meta_tags_context->canonical = 'http://basic.wordpress.test/author/admin/';
 
-		Filters\expectApplied( 'wpseo_schema_person_user_id' );
+		Brain\Monkey\Filters\expectApplied( 'wpseo_schema_person_user_id' );
 
 		$actual = $this->instance->generate();
 
@@ -216,7 +212,7 @@ class Author_Test extends TestCase {
 
 		$this->meta_tags_context->canonical = 'http://basic.wordpress.test/author/admin/';
 
-		Filters\expectApplied( 'wpseo_schema_person_user_id' )
+		Brain\Monkey\Filters\expectApplied( 'wpseo_schema_person_user_id' )
 			->with( $user_id )
 			->andReturn( 'not_a_valid_user_id' );
 
@@ -243,7 +239,7 @@ class Author_Test extends TestCase {
 
 		$this->meta_tags_context->canonical = 'http://basic.wordpress.test/author/admin/';
 
-		Filters\expectApplied( 'wpseo_schema_person_user_id' );
+		Brain\Monkey\Filters\expectApplied( 'wpseo_schema_person_user_id' );
 
 		$actual = $this->instance->generate();
 

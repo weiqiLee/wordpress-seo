@@ -5,7 +5,7 @@
  * @package Yoast\WP\SEO\Tests\Presenters
  */
 
-namespace Yoast\WP\SEO\Tests\Presenters\Debug;
+namespace Yoast\WP\SEO\Tests\Presenters;
 
 use Brain\Monkey;
 use Mockery;

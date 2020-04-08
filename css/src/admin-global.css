@@ -442,12 +442,12 @@ td.column-wpseo-linked {
   overflow: hidden;
 }
 
-.yoast-notification .yoast-seo-icon {
+.yoast-alert .yoast-seo-icon {
   float: left;
   margin: 20px 10px;
 }
 
-.yoast-notification .yoast-seo-icon-wrap {
+.yoast-alert .yoast-seo-icon-wrap {
   margin: 0 0 0 85px;
 }
 

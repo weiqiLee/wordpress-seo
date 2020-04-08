@@ -1,7 +1,5 @@
 <?php
 
-namespace Yoast\WP\SEO\Tests\Helpers;
-
 use Brain\Monkey;
 use Yoast\WP\SEO\Helpers\Primary_Term_Helper;
 use Yoast\WP\SEO\Tests\TestCase;

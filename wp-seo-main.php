@@ -15,7 +15,7 @@ if ( ! function_exists( 'add_filter' ) ) {
  * {@internal Nobody should be able to overrule the real version number as this can cause
  *            serious issues with the options, so no if ( ! defined() ).}}
  */
-define( 'WPSEO_VERSION', '14.0-RC3' );
+define( 'WPSEO_VERSION', '14.0-RC2' );
 
 
 if ( ! defined( 'WPSEO_PATH' ) ) {
@@ -24,11 +24,6 @@ if ( ! defined( 'WPSEO_PATH' ) ) {
 
 if ( ! defined( 'WPSEO_BASENAME' ) ) {
 	define( 'WPSEO_BASENAME', plugin_basename( WPSEO_FILE ) );
-}
-
-if ( ! extension_loaded( 'pdo_mysql' ) ) {
-	require_once WPSEO_PATH . 'polyfills/pdo/pdo-mysqli-polyfill.php';
-	require_once WPSEO_PATH . 'polyfills/pdo/pdo-mysqli-statement-polyfill.php';
 }
 
 /*
@@ -461,7 +456,7 @@ if ( ! wp_installing() && ( $spl_autoload_exists && $filter_exists ) ) {
 
 	if ( is_admin() ) {
 
-		new Yoast_Notifications();
+		new Yoast_Alerts();
 
 		$yoast_addon_manager = new WPSEO_Addon_Manager();
 		$yoast_addon_manager->register_hooks();

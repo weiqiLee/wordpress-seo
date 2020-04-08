@@ -5,7 +5,7 @@
  * @package Yoast\YoastSEO\Memoizers
  */
 
-namespace Yoast\WP\SEO\Memoizers;
+namespace Yoast\WP\SEO\Memoizer;
 
 use Yoast\WP\SEO\Context\Meta_Tags_Context;
 use Yoast\WP\SEO\Models\Indexable;

@@ -30,7 +30,7 @@ final class Marker_Close_Presenter extends Abstract_Indexable_Presenter {
 		}
 
 		return \sprintf(
-			'<!-- / %s. -->',
+			'<!-- / %s. -->' . PHP_EOL . PHP_EOL,
 			\esc_html( $this->helpers->product->get_name() )
 		);
 	}

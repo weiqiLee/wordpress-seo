@@ -14,7 +14,6 @@
     <exclude-pattern>.wordpress-svn/*</exclude-pattern>
     <exclude-pattern>config/php-scoper/*</exclude-pattern>
     <exclude-pattern>src/generated/*</exclude-pattern>
-    <exclude-pattern>polyfills/*</exclude-pattern>
 
     <arg name="extensions" value="php"/>
     <arg value="sp"/>

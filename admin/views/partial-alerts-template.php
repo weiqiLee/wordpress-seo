@@ -17,17 +17,17 @@
  * @uses    array  $dismissed
  */
 
-if ( ! function_exists( '_yoast_display_notifications' ) ) {
+if ( ! function_exists( '_yoast_display_alerts' ) ) {
 	/**
-	 * Create the notifications HTML with restore/dismiss button.
+	 * Create the alert HTML with restore/dismiss button.
 	 *
-	 * @param array  $list   List of notifications.
-	 * @param string $status Status of the notifications (active/dismissed).
+	 * @param array  $list   List of alerts.
+	 * @param string $status Status of the alerts (active/dismissed).
 	 *
 	 * @return string The output to render.
 	 */
-	function _yoast_display_notifications( $list, $status ) {
-		$notifications = '';
+	function _yoast_display_alerts( $list, $status ) {
+		$alerts = '';
 
 		foreach ( $list as $notification ) {
 
@@ -46,8 +46,8 @@ if ( ! function_exists( '_yoast_display_notifications' ) ) {
 					break;
 			}
 
-			$notifications .= sprintf(
-				'<div class="yoast-notification-holder" id="%1$s" data-nonce="%2$s" data-json="%3$s">%4$s%5$s</div>',
+			$alerts .= sprintf(
+				'<div class="yoast-paper__item" id="%1$s" data-nonce="%2$s" data-json="%3$s">%4$s%5$s</div>',
 				esc_attr( $notification->get_id() ),
 				esc_attr( $notification->get_nonce() ),
 				esc_attr( $notification->get_json() ),
@@ -58,11 +58,14 @@ if ( ! function_exists( '_yoast_display_notifications' ) ) {
 			);
 		}
 
-		return $notifications;
+		return $alerts;
 	}
 }
 
-$wpseo_i18n_summary = $i18n_issues;
+if ( ! empty( $i18n_issues ) ) {
+	$wpseo_i18n_summary = $i18n_issues;
+}
+
 if ( ! $active ) {
 	$dashicon           = 'yes';
 	$wpseo_i18n_summary = $i18n_no_issues;
@@ -73,14 +76,14 @@ if ( ! $active ) {
 	<?php echo esc_html( $i18n_title ); ?> (<?php echo (int) $active_total; ?>)
 </h2>
 
-<div id="<?php echo esc_attr( 'yoast-' . $type ); ?>">
+<div>
 
 	<?php if ( $total ) : ?>
 
 		<div class="yoast-paper__content">
 			<?php
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: _yoast_display_notifications is considered a safe function.
-			echo _yoast_display_notifications( $active, 'active' );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: _yoast_display_alerts is considered a safe function.
+			echo _yoast_display_alerts( $active, 'active' );
 			?>
 		</div>
 
@@ -92,10 +95,10 @@ if ( ! $active ) {
 				[
 					'paper_id'                 => esc_attr( $type . '-dismissed' ),
 					'paper_id_prefix'          => 'yoast-',
-					'class'                    => 'yoast-notifications-dismissed',
-					'content'                  => _yoast_display_notifications( $dismissed, 'dismissed' ),
+					'class'                    => 'yoast-alerts-dismissed',
+					'content'                  => _yoast_display_alerts( $dismissed, 'dismissed' ),
 					'collapsible'              => true,
-					'collapsible_header_class' => 'yoast-notification',
+					'collapsible_header_class' => 'yoast-alert',
 				]
 			);
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Reason: current usage is considered safe.

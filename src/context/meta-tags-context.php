@@ -371,14 +371,8 @@ class Meta_Tags_Context extends Abstract_Presentation {
 	 */
 	public function generate_schema_page_type() {
 		switch ( $this->indexable->object_type ) {
-			case 'system-page':
-				switch ( $this->indexable->object_sub_type ) {
-					case 'search-result':
-						$type = 'SearchResultsPage';
-						break;
-					default:
-						$type = 'WebPage';
-				}
+			case 'search-result':
+				$type = 'SearchResultsPage';
 				break;
 			case 'user':
 				$type = [ 'ProfilePage', 'WebPage' ];

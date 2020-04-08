@@ -6,9 +6,9 @@
  */
 
 /**
- * Class Yoast_Notifications.
+ * Class Yoast_Alerts.
  */
-class Yoast_Notifications {
+class Yoast_Alerts {
 
 	/**
 	 * Holds the admin page's ID.
@@ -67,7 +67,7 @@ class Yoast_Notifications {
 	private static $dismissed_warnings = [];
 
 	/**
-	 * Yoast_Notifications constructor.
+	 * Yoast_Alerts constructor.
 	 */
 	public function __construct() {
 
@@ -84,12 +84,12 @@ class Yoast_Notifications {
 			add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		}
 
-		// Needed for adminbar and Notifications page.
-		add_action( 'admin_init', [ __CLASS__, 'collect_notifications' ], 99 );
+		// Needed for adminbar and Alerts page.
+		add_action( 'admin_init', [ __CLASS__, 'collect_alerts' ], 99 );
 
 		// Add AJAX hooks.
-		add_action( 'wp_ajax_yoast_dismiss_notification', [ $this, 'ajax_dismiss_notification' ] );
-		add_action( 'wp_ajax_yoast_restore_notification', [ $this, 'ajax_restore_notification' ] );
+		add_action( 'wp_ajax_yoast_dismiss_alert', [ $this, 'ajax_dismiss_alert' ] );
+		add_action( 'wp_ajax_yoast_restore_alert', [ $this, 'ajax_restore_alert' ] );
 	}
 
 	/**
@@ -98,25 +98,13 @@ class Yoast_Notifications {
 	public function enqueue_assets() {
 
 		$asset_manager = new WPSEO_Admin_Asset_Manager();
-		$asset_manager->enqueue_style( 'notifications' );
+		$asset_manager->enqueue_style( 'alerts' );
 	}
 
 	/**
-	 * Deprecated: Handle ajax request to dismiss a alert.
-	 * Renamed to ajax_dismiss_notification
-	 *
-	 * @deprecated 14.0
-	 *
-	 * @codeCoverageIgnore
+	 * Handle ajax request to dismiss an alert.
 	 */
 	public function ajax_dismiss_alert() {
-		_deprecated_function( __METHOD__, 'WPSEO 14.0' );
-	}
-
-	/**
-	 * Handle ajax request to dismiss a notification.
-	 */
-	public function ajax_dismiss_notification() {
 
 		$notification = $this->get_notification_from_ajax_request();
 		if ( $notification ) {
@@ -130,22 +118,9 @@ class Yoast_Notifications {
 	}
 
 	/**
-	 * Deprecated: Handle ajax request to restore a notification.
-	 * Renamed to ajax_restore_notification
-	 *
-	 * @return void
-	 * @deprecated 14.0
-	 *
-	 * @codeCoverageIgnore
+	 * Handle ajax request to restore an alert.
 	 */
 	public function ajax_restore_alert() {
-		_deprecated_function( __METHOD__, 'WPSEO 14.0' );
-	}
-
-	/**
-	 * Handle ajax request to restore a notification.
-	 */
-	public function ajax_restore_notification() {
 
 		$notification = $this->get_notification_from_ajax_request();
 		if ( $notification ) {
@@ -161,7 +136,7 @@ class Yoast_Notifications {
 	/**
 	 * Create AJAX response data.
 	 *
-	 * @param string $type Notification type.
+	 * @param string $type Alert type.
 	 */
 	private function output_ajax_response( $type ) {
 
@@ -170,7 +145,7 @@ class Yoast_Notifications {
 		echo WPSEO_Utils::format_json_encode(
 			[
 				'html'  => $html,
-				'total' => self::get_active_notification_count(),
+				'total' => self::get_active_alert_count(),
 			]
 		);
 		// phpcs:enable -- Reason: WPSEO_Utils::format_json_encode is safe.
@@ -179,7 +154,7 @@ class Yoast_Notifications {
 	/**
 	 * Get the HTML to return in the AJAX request.
 	 *
-	 * @param string $type Notification type.
+	 * @param string $type Alert type.
 	 *
 	 * @return bool|string
 	 */
@@ -196,18 +171,18 @@ class Yoast_Notifications {
 				break;
 		}
 
-		// Re-collect notifications.
-		self::collect_notifications();
+		// Re-collect alerts.
+		self::collect_alerts();
 
 		/**
 		 * Stops PHPStorm from nagging about this variable being unused. The variable is used in the view.
 		 *
 		 * @noinspection PhpUnusedLocalVariableInspection
 		 */
-		$notifications_data = self::get_template_variables();
+		$alerts_data = self::get_template_variables();
 
 		ob_start();
-		include WPSEO_PATH . 'admin/views/partial-notifications-' . $view . '.php';
+		include WPSEO_PATH . 'admin/views/partial-alerts-' . $view . '.php';
 		$html = ob_get_clean();
 
 		return $html;
@@ -227,21 +202,36 @@ class Yoast_Notifications {
 	}
 
 	/**
-	 * Collect the notifications and group them together.
+	 * Show the alerts overview page.
 	 */
-	public static function collect_notifications() {
+	public static function show_overview_page() {
+
+		/**
+		 * Stops PHPStorm from nagging about this variable being unused. The variable is used in the view.
+		 *
+		 * @noinspection PhpUnusedLocalVariableInspection
+		 */
+		$alerts_data = self::get_template_variables();
+
+		include WPSEO_PATH . 'admin/views/alerts-dashboard.php';
+	}
+
+	/**
+	 * Collect the alerts and group them together.
+	 */
+	public static function collect_alerts() {
 
 		$notification_center = Yoast_Notification_Center::get();
 
 		$notifications            = $notification_center->get_sorted_notifications();
 		self::$notification_count = count( $notifications );
 
-		self::$errors           = array_filter( $notifications, [ __CLASS__, 'filter_error_notifications' ] );
-		self::$dismissed_errors = array_filter( self::$errors, [ __CLASS__, 'filter_dismissed_notifications' ] );
+		self::$errors           = array_filter( $notifications, [ __CLASS__, 'filter_error_alerts' ] );
+		self::$dismissed_errors = array_filter( self::$errors, [ __CLASS__, 'filter_dismissed_alerts' ] );
 		self::$active_errors    = array_diff( self::$errors, self::$dismissed_errors );
 
-		self::$warnings           = array_filter( $notifications, [ __CLASS__, 'filter_warning_notifications' ] );
-		self::$dismissed_warnings = array_filter( self::$warnings, [ __CLASS__, 'filter_dismissed_notifications' ] );
+		self::$warnings           = array_filter( $notifications, [ __CLASS__, 'filter_warning_alerts' ] );
+		self::$dismissed_warnings = array_filter( self::$warnings, [ __CLASS__, 'filter_dismissed_alerts' ] );
 		self::$active_warnings    = array_diff( self::$warnings, self::$dismissed_warnings );
 	}
 
@@ -255,7 +245,7 @@ class Yoast_Notifications {
 		return [
 			'metrics'  => [
 				'total'    => self::$notification_count,
-				'active'   => self::get_active_notification_count(),
+				'active'   => self::get_active_alert_count(),
 				'errors'   => count( self::$errors ),
 				'warnings' => count( self::$warnings ),
 			],
@@ -271,41 +261,13 @@ class Yoast_Notifications {
 	}
 
 	/**
-	 * Deprecated: Get the number of active notifications.
-	 * Renamed to get_active_notification_count
-	 *
-	 * @return int
-	 * @deprecated 14.0
-	 *
-	 * @codeCoverageIgnore
-	 */
-	public function get_active_alert_count() {
-		_deprecated_function( __METHOD__, 'WPSEO 14.0' );
-		return 0;
-	}
-
-	/**
-	 * Get the number of active notifications.
+	 * Get the number of active alerts.
 	 *
 	 * @return int
 	 */
-	public static function get_active_notification_count() {
+	public static function get_active_alert_count() {
 
 		return ( count( self::$active_errors ) + count( self::$active_warnings ) );
-	}
-
-	/**
-	 * Deprecated: Filter out any non-errors. Renamed to filter_error_notifications
-	 *
-	 * @param Yoast_Notification $notification $notification Notification to test.
-	 * @return bool
-	 * @deprecated 14.0
-	 *
-	 * @codeCoverageIgnore
-	 */
-	public function filter_error_alerts( Yoast_Notification $notification ) {
-		_deprecated_function( __METHOD__, 'WPSEO 14.0' );
-		return false;
 	}
 
 	/**
@@ -315,26 +277,10 @@ class Yoast_Notifications {
 	 *
 	 * @return bool
 	 */
-	private static function filter_error_notifications( Yoast_Notification $notification ) {
+	private static function filter_error_alerts( Yoast_Notification $notification ) {
 
 		return $notification->get_type() === 'error';
 	}
-
-
-	/**
-	 * Deprecated: Filter out any non-warnings. Renamed to filter_warning_notifications
-	 *
-	 * @param Yoast_Notification $notification $notification Notification to test.
-	 * @return bool
-	 * @deprecated 14.0
-	 *
-	 * @codeCoverageIgnore
-	 */
-	public function filter_warning_alerts( Yoast_Notification $notification ) {
-		_deprecated_function( __METHOD__, 'WPSEO 14.0' );
-		return false;
-	}
-
 
 	/**
 	 * Filter out any non-warnings.
@@ -343,23 +289,9 @@ class Yoast_Notifications {
 	 *
 	 * @return bool
 	 */
-	private static function filter_warning_notifications( Yoast_Notification $notification ) {
+	private static function filter_warning_alerts( Yoast_Notification $notification ) {
 
 		return $notification->get_type() !== 'error';
-	}
-
-	/**
-	 * Deprecated: Filter out any dismissed notifications. Renamed to filter_dismissed_alerts.
-	 *
-	 * @param Yoast_Notification $notification Notification to test.
-	 * @return bool
-	 * @deprecated 14.0
-	 *
-	 * @codeCoverageIgnore
-	 */
-	public function filter_dismissed_alerts( Yoast_Notification $notification ) {
-		_deprecated_function( __METHOD__, 'WPSEO 14.0' );
-		return false;
 	}
 
 	/**
@@ -369,10 +301,8 @@ class Yoast_Notifications {
 	 *
 	 * @return bool
 	 */
-	private static function filter_dismissed_notifications( Yoast_Notification $notification ) {
+	private static function filter_dismissed_alerts( Yoast_Notification $notification ) {
 
 		return Yoast_Notification_Center::is_notification_dismissed( $notification );
 	}
 }
-
-class_alias( Yoast_Notifications::class, 'Yoast_Alerts' );
