@@ -49,12 +49,6 @@ class Indexable_Repository {
 	protected $logger;
 
 	/**
-	 * The WordPress database.
-	 * @var \wpdb
-	 */
-	protected $wpdb;
-
-	/**
 	 * Returns the instance of this class constructed through the ORM Wrapper.
 	 *
 	 * @param Indexable_Builder              $builder              The indexable builder.
