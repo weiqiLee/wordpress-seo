@@ -15,12 +15,13 @@ $yform          = Yoast_Form::get_instance();
 $robots_file    = get_home_path() . 'robots.txt';
 $ht_access_file = get_home_path() . '.htaccess';
 
-$credentials = request_filesystem_credentials( $robots_file, '', false, false, null );
+$credentials = request_filesystem_credentials( network_admin_url( 'admin.php?page=wpseo_tools&tool=file-editor' ), '', false, false, null );
 if ( $credentials === false ) {
 	return;
 }
 if ( ! WP_Filesystem( $credentials ) ) {
-	request_filesystem_credentials( $robots_file, '', true, false, null );
+	// Error is true to notify the user.
+	request_filesystem_credentials( network_admin_url( 'admin.php?page=wpseo_tools&tool=file-editor' ), '', true, false, null );
 
 	return;
 }
