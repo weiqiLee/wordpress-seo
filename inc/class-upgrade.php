@@ -6,6 +6,10 @@
  */
 
 use Yoast\WP\Lib\Model;
+use Yoast\WP\SEO\Actions\Indexation\Indexable_General_Indexation_Action;
+use Yoast\WP\SEO\Actions\Indexation\Indexable_Post_Indexation_Action;
+use Yoast\WP\SEO\Actions\Indexation\Indexable_Post_Type_Archive_Indexation_Action;
+use Yoast\WP\SEO\Actions\Indexation\Indexable_Term_Indexation_Action;
 
 /**
  * This code handles the option upgrades.
@@ -58,6 +62,7 @@ class WPSEO_Upgrade {
 			'14.0.3-RC0' => 'upgrade_1403',
 			'14.1-RC0'   => 'upgrade_141',
 			'14.2-RC0'   => 'upgrade_142',
+			'14.5-RC0'   => 'upgrade_145'
 		];
 
 		array_walk( $routines, [ $this, 'run_upgrade_routine' ], $version );
@@ -768,6 +773,37 @@ class WPSEO_Upgrade {
 	 */
 	private function upgrade_142() {
 		add_action( 'init', [ $this, 'remove_acf_notification_for_142' ] );
+	}
+
+	/**
+	 * Performs the 14.5 upgrade.
+	 */
+	private function upgrade_145() {
+		add_action( 'init', [ $this, 'set_indexation_completed_option_for_145' ]);
+	}
+
+	/**
+	 * Checks if the indexable indexation is completed.
+	 * If so, sets the `indexables_indexation_completed` option to `true`,
+	 * else to `false`.
+	 */
+	public function set_indexation_completed_option_for_145() {
+		$post_indexation              = YoastSEO()->classes->get( Indexable_Post_Indexation_Action::class );
+		$term_indexation              = YoastSEO()->classes->get( Indexable_Term_Indexation_Action::class );
+		$post_type_archive_indexation = YoastSEO()->classes->get( Indexable_Post_Type_Archive_Indexation_Action::class );
+		$general_indexation           = YoastSEO()->classes->get( Indexable_General_Indexation_Action::class );
+
+		$total_unindexed = 0;
+		$total_unindexed += $post_indexation->get_total_unindexed();
+		$total_unindexed += $term_indexation->get_total_unindexed();
+		$total_unindexed += $post_type_archive_indexation->get_total_unindexed();
+		$total_unindexed += $general_indexation->get_total_unindexed();
+
+		if ( $total_unindexed === 0 ) {
+			WPSEO_Options::set( 'indexables_indexation_completed', true );
+		} else {
+			WPSEO_Options::set( 'indexables_indexation_completed', false );
+		}
 	}
 
 	/**
