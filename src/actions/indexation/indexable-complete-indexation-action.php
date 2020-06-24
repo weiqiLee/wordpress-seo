@@ -12,7 +12,7 @@ use Yoast\WP\SEO\Helpers\Options_Helper;
 /**
  * Indexation action to call when the indexable indexation process is completed.
  */
-class Indexable_Complete_Indexation_Action implements Indexation_Action_Interface {
+class Indexable_Complete_Indexation_Action {
 
 	/**
 	 * The options helper.
@@ -31,37 +31,15 @@ class Indexable_Complete_Indexation_Action implements Indexation_Action_Interfac
 	}
 
 	/**
-	 * Not used, since this action does not index anything.
-	 *
-	 * @return int 0, since this action does not index anything.
-	 */
-	public function get_total_unindexed() {
-		/*
-		 * Nothing gets indexed using this action.
-		 * It is used for wrapping things up.
-		 */
-		return 0;
-	}
-
-	/**
 	 * Wraps up the indexation process.
 	 *
 	 * @return array An empty array.
 	 */
-	public function index() {
+	public function complete() {
 		$this->options->set( 'indexation_started', 0 );
 		$this->options->set( 'indexables_indexation_reason', '' );
 		$this->options->set( 'indexables_indexation_completed', true );
 
 		return [];
-	}
-
-	/**
-	 * Not used, since this action does not index anything.
-	 *
-	 * @return int 0
-	 */
-	public function get_limit() {
-		return 0;
 	}
 }
