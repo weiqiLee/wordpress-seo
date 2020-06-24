@@ -142,7 +142,7 @@ class Indexable_Indexation_Route extends Abstract_Indexation_Route {
 	 *
 	 * @var Indexable_Complete_Indexation_Action
 	 */
-	private $complete_indexaction_action;
+	private $complete_indexation_action;
 
 	/**
 	 * Represents the options helper.
@@ -173,7 +173,7 @@ class Indexable_Indexation_Route extends Abstract_Indexation_Route {
 		$this->term_indexation_action              = $term_indexation_action;
 		$this->post_type_archive_indexation_action = $post_type_archive_indexation_action;
 		$this->general_indexation_action           = $general_indexation_action;
-		$this->complete_indexaction_action         = $complete_indexation_action;
+		$this->complete_indexation_action         = $complete_indexation_action;
 		$this->options_helper                      = $options_helper;
 	}
 
@@ -253,7 +253,7 @@ class Indexable_Indexation_Route extends Abstract_Indexation_Route {
 	 * Completes the indexation.
 	 */
 	public function complete() {
-		return $this->respond_with( $this->complete_indexaction_action->complete(), false );
+		return $this->respond_with( $this->complete_indexation_action->complete(), false );
 	}
 
 	/**
