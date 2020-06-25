@@ -10,3 +10,4 @@ window.yoast.searchMetadataPreviews = require( "@yoast/search-metadata-previews"
 window.yoast.analysisReport = require( "@yoast/analysis-report" );
 window.yoast.components = require( "yoast-components/index.js" );
 window.yoast.socialMetadataForms = require( "@yoast/social-metadata-forms" );
+window.yoast.replacementVariableEditor = require( "@yoast/replacement-variable-editor" );
