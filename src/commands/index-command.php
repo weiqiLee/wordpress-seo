@@ -52,6 +52,7 @@ class Index_Command implements Command_Interface {
 
 	/**
 	 * The complete indexation action.
+	 *
 	 * @var Indexable_Complete_Indexation_Action
 	 */
 	private $complete_indexation_action;
@@ -66,6 +67,8 @@ class Index_Command implements Command_Interface {
 	 * @param Indexable_Post_Type_Archive_Indexation_Action $post_type_archive_indexation_action The post type archive
 	 *                                                                                           indexation action.
 	 * @param Indexable_General_Indexation_Action           $general_indexation_action           The general indexation
+	 *                                                                                           action.
+	 * @param Indexable_Complete_Indexation_Action          $complete_indexation_action          The complete indexation
 	 *                                                                                           action.
 	 */
 	public function __construct(
