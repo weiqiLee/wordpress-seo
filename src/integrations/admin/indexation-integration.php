@@ -180,6 +180,8 @@ class Indexation_Integration implements Integration_Interface {
 			return;
 		}
 
+		$this->options_helper->set( 'indexables_indexation_completed', false );
+
 		$this->is_on_yoast_tools_page = $this->yoast_tools_page_conditional->is_met();
 		$this->indexation_action_type = ( $this->is_on_yoast_tools_page ) ? Indexation_Warning_Presenter::ACTION_TYPE_RUN_HERE : Indexation_Warning_Presenter::ACTION_TYPE_LINK_TO;
 
@@ -304,6 +306,7 @@ class Indexation_Integration implements Integration_Interface {
 	 */
 	protected function set_complete() {
 		$this->options_helper->set( 'indexables_indexation_reason', '' );
+		$this->options_helper->set( 'indexables_indexation_completed', true );
 	}
 
 	/**

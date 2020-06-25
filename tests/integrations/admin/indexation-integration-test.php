@@ -185,6 +185,11 @@ class Indexation_Integration_Test extends TestCase {
 			->with( 'indexables_indexation_reason', '' )
 			->andReturn( '' );
 
+		$this->options
+			->expects( 'set' )
+			->once()
+			->with( 'indexables_indexation_completed', false );
+
 		Monkey\Actions\expectAdded( 'admin_notices' );
 
 		// Expect that the script and style for the modal is enqueued.
@@ -243,6 +248,11 @@ class Indexation_Integration_Test extends TestCase {
 			->expects( 'get' )
 			->with( 'ignore_indexation_warning', false )
 			->andReturnTrue();
+
+		$this->options
+			->expects( 'set' )
+			->once()
+			->with( 'indexables_indexation_completed', false );
 
 		// Expect that the script and style for the modal is enqueued.
 		$this->asset_manager
@@ -344,6 +354,11 @@ class Indexation_Integration_Test extends TestCase {
 			->with( 'ignore_indexation_warning', false )
 			->andReturnTrue();
 
+		$this->options
+			->expects( 'set' )
+			->once()
+			->with( 'indexables_indexation_completed', false );
+
 		// Expect that the script and style for the modal is not enqueued.
 		$this->asset_manager
 			->expects( 'enqueue_script' )
@@ -392,6 +407,12 @@ class Indexation_Integration_Test extends TestCase {
 			->expects( 'set' )
 			->once()
 			->with( 'indexables_indexation_reason', '' );
+
+
+		$this->options
+			->expects( 'set' )
+			->once()
+			->with( 'indexables_indexation_completed', true );
 
 		// The warning and modal should not be rendered.
 		Monkey\Actions\expectAdded( 'admin_footer' )->never();
