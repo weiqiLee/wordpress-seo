@@ -44,3 +44,5 @@ export const getFacebookImageSrc = state => get( state, "facebookEditor.image.sr
  * @returns {String} Facebook warnings.
  */
 export const getFacebookWarnings = state => get( state, "facebookEditor.warnings", [] );
+
+export const setFacebookWarnings = (state, warnings) => { state.facebookEditor.warnings = warnings };
