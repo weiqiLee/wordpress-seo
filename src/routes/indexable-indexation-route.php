@@ -173,7 +173,7 @@ class Indexable_Indexation_Route extends Abstract_Indexation_Route {
 		$this->term_indexation_action              = $term_indexation_action;
 		$this->post_type_archive_indexation_action = $post_type_archive_indexation_action;
 		$this->general_indexation_action           = $general_indexation_action;
-		$this->complete_indexation_action         = $complete_indexation_action;
+		$this->complete_indexation_action          = $complete_indexation_action;
 		$this->options_helper                      = $options_helper;
 	}
 
